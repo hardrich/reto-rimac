@@ -1,7 +1,5 @@
 custom:
   config: ${file(./${opt:stage}.env.yml):config}
-  env: ${file(./${opt:stage}.env.yml):env}
-  stage: ${opt:stage, self:provider.stage}
 
 service: ${file(./${opt:service}/service.yml):service}
 

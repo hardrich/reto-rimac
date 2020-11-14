@@ -1,6 +1,13 @@
+/**
+ * By Richard Principe Quiroz
+ * Clase que implementa un response de la entidad People.
+ */
 const objectMapper = require('object-mapper');
 
 class PeopleResponse {
+  /**
+   * Mapeo de la entidad People (guardad en swapi o dynamodb) a un modelo en español
+   */
   static map(people) {
     var map = {
       "name" : "nombre",

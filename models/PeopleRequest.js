@@ -1,6 +1,15 @@
+/**
+ * By Richard Principe Quiroz
+ * Clase que implementa un request de la entidad People.
+ */
+
 const objectMapper = require('object-mapper');
 
 class PeopleRequest {
+  /**
+   * Validación básica de un request de la entidad People, para ser guardado en dynamodb
+   * El modelo es válido si cuenta con todos los atributos a continuación y concuerdan con el tipo de dato
+   */
   static isValid(people) {    
     return (
       people &&
@@ -23,6 +32,9 @@ class PeopleRequest {
     );
   }
 
+  /**
+   * Mapeo del modelo request a un modelo DTO, para ser guardado en dynamodb
+   */
   static mapToDTO(people) {
     var map = {
       "id": "id",

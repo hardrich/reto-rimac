@@ -1,11 +1,21 @@
+/**
+ * By Richard Principe Quiroz
+ * Clase helper para soportar la manipulacion de datos de una tabla en dynamodb
+ */
+const AWS = require("aws-sdk");
+const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
 class DynamoHelper {
-  constructor(documentClient, tableName) {
-    this.documentClient = documentClient;
+  constructor() {
+    this.documentClient = dynamoDb;
     this.params = {
-      TableName: tableName
+      TableName: process.env.RIMAC_TABLE
     };
   }
 
+  /**
+   * Obtener una fila de una tabla dynamodb
+   */
   async get(id) {
     const getParams = this.createParamObject({ 
       Key: {
@@ -16,18 +26,20 @@ class DynamoHelper {
     return response.Item;
   } 
 
+  /**
+   * Guardar una fila en una tabla dynamodb
+   */
   async put(entity) {
     const params = this.createParamObject({ Item: entity });
     await this.documentClient.put(params).promise();
     return entity;
   }
 
+  /**
+   * Asignar parámetros adicionales a la configuración de la acción con dynamo
+   */
   createParamObject(additionalArgs = {}) {
     return Object.assign({}, this.params, additionalArgs);
-  }
-
-  getProjection(expression) {
-    return Object.keys(expression).join()
   }
 }
 

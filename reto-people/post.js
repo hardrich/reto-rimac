@@ -1,3 +1,11 @@
+/**
+ * By Richard Principe Quiroz
+ * Handler para guardar personas (entidad People) en una tabla dynamodb
+ * Se debe enviar en el body un json que cumpla con el modelo PeopleRequest (campos en español)
+ * Se guardará en la tabla si es un modelo válido, luego el servidor responderá con el
+ * identificador de la persona. Esto es temporal para poder luego hacer uso del endpoint GET y
+ * obtener los datos desde la tabla en dynamodb.
+ */
 "use strict";
 
 const { PeopleRepository } = require("../repositories/PeopleRepository");
@@ -14,11 +22,15 @@ const repository = new PeopleRepository();
 
 exports.handler = async (event) => {
   const { body } = event;
-  let people = parseJson(body);
-  if (PeopleRequest.isValid(people)) {
-    people.id = uuid().toString();
-    await repository.create(PeopleRequest.mapToDTO(people));
-    return created(ResponseUtil.createdOk());
+  if (body) {
+    let people = parseJson(body);
+    if (PeopleRequest.isValid(people)) {
+      people.id = uuid().toString();
+      const response = await repository.create(PeopleRequest.mapToDTO(people)); //mapToDTO(people) mapea un request en español a su equivalente en inglés
+      return created(response);
+    } else {
+      return badRequest(ResponseUtil.invalid());
+    }
   } else {
     return badRequest(ResponseUtil.invalid());
   }

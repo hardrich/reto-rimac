@@ -1,3 +1,7 @@
+/**
+ * By Richard Principe Quiroz
+ * Configurar respuesta del servidor
+ */
 const responseWithStatus = (status, formatter = null) => {
   if (status < 100 || status > 599) {
     throw new Error('Status code out of range');
