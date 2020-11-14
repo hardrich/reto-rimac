@@ -1,0 +1,28 @@
+package:
+  exclude:
+    - "**/*"
+  include:
+    - node_modules/**
+    - reto-people/**
+    - utils/**
+    - repositories/**
+
+service: reto-people
+
+functions:
+  getPeople:
+    handler: reto-people/get.handler
+    memorySize: 128
+    events:
+      - http:
+          path: /people/{id}
+          method: get
+          cors: true
+  postPeople:
+    handler: reto-people/post.handler
+    memorySize: 128
+    events:
+      - http:
+          path: /people
+          method: post
+          cors: true

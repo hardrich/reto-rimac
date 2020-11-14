@@ -1,0 +1,30 @@
+custom:
+  config: ${file(./${opt:stage}.env.yml):config}
+  env: ${file(./${opt:stage}.env.yml):env}
+  stage: ${opt:stage, self:provider.stage}
+
+service: ${file(./${opt:service}/service.yml):service}
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: ${opt:stage, 'dev'}
+  region: ${self:custom.config.region}
+  environment:    
+    RIMAC_TABLE: rimac-${self:provider.stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:BatchWriteItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.RIMAC_TABLE}"    
+
+package: ${file(./${opt:service}/service.yml):package}
+functions: ${file(./${opt:service}/service.yml):functions}
