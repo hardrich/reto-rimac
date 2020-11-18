@@ -5,7 +5,7 @@ Este proyecto es un API escalable con serverless framework, nodejs, dynamodb, sw
 Abrir un terminal a un directorio distinto al de este proyecto. Luego ingresar estas credenciales de aws
 
 ```bash
-serverless config credentials --provider aws --key AKIA3VI2XKFBGMEB2AUD --secret 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 --overwrite
+serverless config credentials --provider aws --key xxxxxxxxxx --secret xxxxxxxxxxxxxxxxxxxx --overwrite
 ```
 
 ## Comandos en el directorio del proyecto
